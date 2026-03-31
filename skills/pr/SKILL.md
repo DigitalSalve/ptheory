@@ -95,7 +95,7 @@ gh pr create --title "type: concise description" --body "$(cat <<'EOF'
 - [ ] Manual verification steps
 
 ## Related
-- Linear issue: KEE-XX (if applicable)
+- Plane issue: KEE-XX (if applicable)
 - Related PRs or docs
 EOF
 )"
@@ -123,5 +123,5 @@ Examples:
 - Always push the branch before creating the PR
 - Always include a summary of what changed and why
 - Always include testing checklist
-- Include Linear issue ID when one exists
+- Include Plane issue ID when one exists
 - Never force-push to a PR branch without explicit approval

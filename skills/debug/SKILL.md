@@ -70,7 +70,7 @@ it("returns groups with null state (national level)", () => { ... })
 
 ### Step 8: Document
 
-If this was a Linear issue, post the completion comment with root cause analysis.
+If this was a Plane issue, post the completion comment with root cause analysis.
 
 ## Common Debugging Patterns
 

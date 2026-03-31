@@ -8,14 +8,14 @@ description: |
   This skill asks: "are the layers properly connected and structurally sound?"
   Use when the user says "/review-architecture", "architecture review", "check alignment",
   or automatically invoked by the review orchestrator agent after /review-ux completes.
-  Produces structured findings with CRITICAL/MEDIUM/LOW triage that /document-linear turns into issues.
+  Produces structured findings with CRITICAL/MEDIUM/LOW triage that /document-plane turns into issues.
   This is a global skill — works with any project.
 allowed-tools: Read, Edit, Write, Glob, Grep, Bash, Agent, TodoWrite
 ---
 
 # Review Architecture Skill (Structural Alignment Review)
 
-Validates that the system's layers are properly connected, structurally sound, and free of drift. Produces findings that `/document-linear` turns into triaged Linear issues.
+Validates that the system's layers are properly connected, structurally sound, and free of drift. Produces findings that `/document-plane` turns into triaged Plane issues.
 
 **This is NOT code review** (/code-review) **and NOT UX review** (/review-ux). This skill asks: "Are the layers properly connected? Does the architecture match what was built?"
 
@@ -242,14 +242,14 @@ Update workflow state: set `review_architecture: complete`. Update `updated` dat
 
 ### Step 9: Next Step
 
-- "Run `/document-code` then `/document-linear` to post findings and create triage issues"
+- "Run `/document-code` then `/document-plane` to post findings and create triage issues"
 - Architecture artifacts written to `.claude/artifacts/`
 
 ## Rules
 
 1. **This is structural, not behavioral.** Don't check if the feature works — that's /review-ux. Check if the layers are connected correctly.
 2. **Evidence-based.** Every finding must reference specific files and line numbers.
-3. **Don't create issues directly.** /document-linear does that from your findings.
+3. **Don't create issues directly.** /document-plane does that from your findings.
 4. **Gate enforcement is mandatory.** Tests must pass before architecture review.
 5. **Check ALL layers touched.** If the implementation changed 3 layers, check alignment across all 3.
 6. **Schema-migration sync is always checked.** Even if the implementation didn't touch the schema.
