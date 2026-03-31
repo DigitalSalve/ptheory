@@ -6,14 +6,14 @@ description: |
   This skill asks: "does the feature work end-to-end and make sense from a user's perspective?"
   Use when the user says "/review-ux", "UX review", "QA check", "does this work for users",
   or automatically invoked by the /review agent after /test completes.
-  Produces structured findings with CRITICAL/MEDIUM/LOW triage that /document-linear turns into issues.
+  Produces structured findings with CRITICAL/MEDIUM/LOW triage that /document-plane turns into issues.
   This is a global skill — works with any project.
 allowed-tools: Read, Edit, Write, Glob, Grep, Bash, Agent, TodoWrite
 ---
 
 # Review UX Skill (User Journey Review)
 
-Validates implementation from a user journey and application logic perspective. Produces structured findings that `/document-linear` turns into triaged Linear issues.
+Validates implementation from a user journey and application logic perspective. Produces structured findings that `/document-plane` turns into triaged Plane issues.
 
 **This is NOT code review** (/code-review) **and NOT architecture review** (/review-architecture). This skill asks: "Does the feature actually work end-to-end and make sense from a user's perspective?"
 
@@ -33,7 +33,7 @@ Validates implementation from a user journey and application logic perspective. 
 1. Read the active workflow state file at `~/.claude/workflows/`
 2. Identify which issue is being reviewed
 3. Read the plan file for the milestone to understand intended behavior
-4. Read the issue description and acceptance criteria from Linear
+4. Read the issue description and acceptance criteria from Plane
 5. Read the project scope document (via /scope read logic)
 
 ### Step 1: Gate Check
@@ -176,7 +176,7 @@ Update the workflow state file: set `review: complete`. Update `updated` date.
 
 ### Step 8: Next Step
 
-- "Run `/document-code` then `/document-linear` to post findings and create triage issues"
+- "Run `/document-code` then `/document-plane` to post findings and create triage issues"
 - If scope amendments recommended, suggest `/scope amend` first
 
 ---
@@ -185,7 +185,7 @@ Update the workflow state file: set `review: complete`. Update `updated` date.
 
 1. **This is QA, not code review.** Don't check code style or naming. That's /code-review.
 2. **Scope-check everything.** Out-of-scope findings are noted but not triaged.
-3. **Don't create issues directly.** /document-linear does that from your findings.
+3. **Don't create issues directly.** /document-plane does that from your findings.
 4. **Gate enforcement is mandatory.** Tests must be done before review.
 5. **Be thorough but practical.** Skip checks that don't apply, but document why.
 6. **Update the workflow state file.** Mark in_progress at start, complete at end.
