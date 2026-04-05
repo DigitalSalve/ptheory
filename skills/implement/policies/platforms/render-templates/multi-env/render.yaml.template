@@ -1,0 +1,95 @@
+# Render Blueprint Template — Multi-Environment Pattern
+# DO NOT EDIT render.yaml DIRECTLY — it is generated from this template by CI.
+# Edit this file instead. CI substitutes environment variables and writes render.yaml on push.
+#
+# Variables substituted by .github/workflows/generate-render-yaml.yml (envsubst allowlist):
+#   PROJECT_NAME  — Render project + env group name (e.g. MyApp-Main / MyApp-Staging)
+#   ENV_NAME      — environment name (production / staging / dev)
+#   BRANCH_NAME   — git branch this env tracks (main / staging / dev)
+#
+# Non-template variables (e.g. ${API_BASE_URL} in buildCommand) are passed through
+# untouched and interpreted by Render's build shell at deploy time.
+#
+# ---
+# REPLACE "myapp" with your project's service name prefix throughout this file.
+# ADD or REMOVE services to match your project's architecture.
+# ---
+
+projects:
+  - name: ${PROJECT_NAME}
+    environments:
+      - name: ${ENV_NAME}
+        services:
+          # ---- API / Backend service ----
+          - type: web
+            name: myapp-api-${ENV_NAME}
+            branch: ${BRANCH_NAME}
+            runtime: node
+            plan: starter
+            rootDir: backend
+            buildCommand: npm install
+            startCommand: npm run migrate:render && npm run start
+            healthCheckPath: /health
+            envVars:
+              - fromGroup: ${PROJECT_NAME}
+              - key: NODE_ENV
+                value: ${ENV_NAME}
+              - key: DATABASE_URL
+                fromDatabase:
+                  name: myapp-db-${ENV_NAME}
+                  property: connectionString
+
+          # ---- Background worker (optional — remove if not needed) ----
+          - type: worker
+            name: myapp-worker-${ENV_NAME}
+            branch: ${BRANCH_NAME}
+            runtime: node
+            plan: starter
+            rootDir: backend
+            buildCommand: npm install
+            startCommand: npm run start:worker
+            envVars:
+              - fromGroup: ${PROJECT_NAME}
+              - key: NODE_ENV
+                value: ${ENV_NAME}
+              - key: DATABASE_URL
+                fromDatabase:
+                  name: myapp-db-${ENV_NAME}
+                  property: connectionString
+
+          # ---- Marketing / Next.js SSR site (optional) ----
+          - type: web
+            name: myapp-web-${ENV_NAME}
+            branch: ${BRANCH_NAME}
+            runtime: node
+            plan: starter
+            rootDir: marketing
+            buildCommand: npm install && npm run build
+            startCommand: npm run start -- -p $PORT
+            healthCheckPath: /
+            envVars:
+              - fromGroup: ${PROJECT_NAME}
+              - key: INTERNAL_API_URL
+                fromService:
+                  name: myapp-api-${ENV_NAME}
+                  type: web
+                  property: hostport
+
+          # ---- Static web app (optional — remove if not needed) ----
+          - type: web
+            name: myapp-webapp-${ENV_NAME}
+            branch: ${BRANCH_NAME}
+            runtime: static
+            buildCommand: npm install && npm run build
+            staticPublishPath: build
+            routes:
+              - type: rewrite
+                source: /*
+                destination: /index.html
+            envVars:
+              - fromGroup: ${PROJECT_NAME}
+
+        # ---- Database (optional — remove if using external DB) ----
+        databases:
+          - name: myapp-db-${ENV_NAME}
+            plan: basic-1gb

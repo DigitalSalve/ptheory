@@ -1,0 +1,4 @@
+# Environment-specific generated file — keep the current branch's version during merges.
+# This protects production's render.yaml from being overwritten by staging's (or vice versa)
+# when merging between environment branches.
+render.yaml merge=ours
