@@ -1,0 +1,66 @@
+name: Generate render.yaml
+
+# Regenerates render.yaml from render.yaml.template on every push to an environment
+# branch. Uses envsubst in allowlist mode — only the 3 template variables are
+# substituted, anything else (shell vars in buildCommand, etc.) passes through.
+#
+# To add a new environment:
+#   1. Add the branch name to `on.push.branches` below
+#   2. Add a case for it in the "Pick env file" step
+#   3. Create .github/env-values/{env}.env with matching variable values
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+    paths:
+      - 'render.yaml.template'
+      - '.github/env-values/*.env'
+      - '.github/workflows/generate-render-yaml.yml'
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Pick env file
+        id: env
+        run: |
+          case "${{ github.ref_name }}" in
+            main)
+              echo "file=.github/env-values/production.env" >> $GITHUB_OUTPUT
+              ;;
+            staging)
+              echo "file=.github/env-values/staging.env" >> $GITHUB_OUTPUT
+              ;;
+            *)
+              echo "Unsupported branch: ${{ github.ref_name }}"
+              exit 1
+              ;;
+          esac
+
+      - name: Substitute template
+        run: |
+          set -a
+          source ${{ steps.env.outputs.file }}
+          set +a
+          # Allowlist mode: only substitute these variable names.
+          # Shell vars like ${API_BASE_URL}, $HOME, $PORT pass through untouched
+          # for Render's build shell to interpret at deploy time.
+          envsubst '$PROJECT_NAME $ENV_NAME $BRANCH_NAME' < render.yaml.template > render.yaml
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet render.yaml; then
+            echo "No change to render.yaml — skipping commit"
+            exit 0
+          fi
+          git add render.yaml
+          git commit -m "ci: regenerate render.yaml for ${{ github.ref_name }}"
+          git push
