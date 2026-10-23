@@ -1,4 +1,4 @@
-# PTheory Papers
+# PTheory
 
 The writing and history behind PTheory, kept apart from its builds.
 
@@ -17,6 +17,6 @@ Tier: **Paper**. The builds live in `ptheory-template` and `ptheory-framework`.
 | Repo | Relationship |
 |---|---|
 | `ptheory-template`, `ptheory-framework` | The builds |
-| `research-archive` | Candidate Paper 3, "Persistent Context for Agentic Engineering" |
+| `commonplace` | Candidate Paper 3, "Persistent Context for Agentic Engineering" |
 
 Charterline is a separate framework and does not build on PTheory.
