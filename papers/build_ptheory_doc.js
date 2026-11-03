@@ -5,9 +5,9 @@ const {
   AlignmentType, Header, Footer, PageNumber, LevelFormat,
   Table, TableRow, TableCell, WidthType, BorderStyle, ShadingType,
   PageBreak
-} = require('./.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/docx');
+} = require('docx'); // npm install docx, then: node papers/build_ptheory_doc.js
 
-const outDir = './Github/ptheory';
+const outDir = __dirname; // writes the .docx and its charts next to this script
 const chartsDir = path.join(outDir, 'ptheory-charts');
 fs.mkdirSync(chartsDir, { recursive: true });
 

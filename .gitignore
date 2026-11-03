@@ -1,2 +1,5 @@
 .DS_Store
 .env*
+chronicle/
+node_modules/
+papers/ptheory-charts/

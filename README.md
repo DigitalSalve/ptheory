@@ -16,13 +16,7 @@ This repo is the source. PTheory began as Dustin's research into governing AI co
 
 ## Frameworks built from this research
 
-These were developed later, from this research, and are credited separately.
-
-| Repo | What it is |
-|---|---|
-| `ptheory-claude-initial` | PTheory rebuilt for Claude Code, with the process enforced by hooks (31 March to 14 June 2026). Rebuilt from this source. |
-| `ptheory-template` | A portable template any project can adopt (from 1 June 2026). Built from this source. |
-| `ptheory-framework` | The template's public-release snapshot (19 October 2026) |
+Later PTheory frameworks (`ptheory-claude-initial`, `ptheory-template`, `ptheory-framework`) were built from this research and are credited in their own repos.
 
 Related: `commonplace` holds candidate Paper 3, "Persistent Context for Agentic Engineering". Charterline is a separate framework and does not build on PTheory.
 
@@ -57,10 +51,7 @@ ptheory/
 
 ### Project Management
 
-Uses **Plane** (self-hosted at plane.example.com) for issue tracking.
-- Workspace: `your-workspace`
-- API credentials: Infisical → example/dev/plane
-- Plane MCP when available, REST API fallback
+The original framework tracked work in a self-hosted **Plane** instance (workspace and API credentials were kept in a secrets manager). Point the `/plane` skills at your own tracker.
 
 ### Installation
 
@@ -79,3 +70,7 @@ cp -R agents/* ~/.claude/agents/
   → /review → /document-code → /document-plane
   → /close
 ```
+
+## License
+
+[MIT](LICENSE).
