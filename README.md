@@ -43,6 +43,13 @@ Then `/ptheory` in a project: it detects state and routes to onboarding or plann
 
 [`history/original-ptheory.md`](history/original-ptheory.md) is the complete account: lifecycle, state, readiness gate, every rule it set.
 
+## Lineage
+
+- **28 January 2026.** The documentation base PTheory grew from was extracted from two production projects: [origin_project](https://github.com/DigitalSalve/origin_project). Its entry-point file (`AI.md`), eight-layer documentation hierarchy, SOPs and architect-and-subagent pattern carry into PTheory. Pushed to GitHub on 6 February 2026.
+- **22 March 2026.** The name PTheory first appears, in a commit on one of those projects: "PTheory skill chain architecture". The workflow chain design and schema date from the same day.
+- **23 to 30 March 2026.** The system spec is written and versioned from v0.2.0 to v0.10.0, and the lifecycle flow is written in Linear; both are on the `feat/render-multi-env-standard` branch.
+- **31 March 2026.** This repo is created and the framework is committed as 50 skills and 21 agents.
+
 ## Status
 
 Historical. This is the framework as defined on 31 March 2026; it is not maintained. The system spec, workflow schema, chain flow and design docs, plus a Render multi-environment standard (31 March to 5 April 2026), are on the `feat/render-multi-env-standard` branch.
