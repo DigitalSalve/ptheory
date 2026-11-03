@@ -1,68 +1,33 @@
 # PTheory
 
-The original PTheory: the research, the proposals and the first framework, by Dustin Taylor.
+The original PTheory: the research, the paper and the first framework for governing AI coding agents, by Dustin Taylor, 31 March 2026.
 
-This repo is the source. PTheory began as Dustin's research into governing AI coding agents. On 31 March 2026 he defined it as a framework of 50 skills and 21 agents, with the split between an architect and an operator, and wrote it up in the paper "PTheory: Parallel Architecture and Operations". Everything here is Dustin's work.
+## What it does
 
-## Contents
+PTheory is a development method for Claude Code, expressed as 50 skills (how a step is done) and 21 agents (who does it). Its aim is to cut the development cycle in half by letting exploration and production run in parallel, joined by contracts.
 
-| Path | What it is |
+Three convictions sit under everything in it:
+
+| Conviction | What it meant in practice |
 |---|---|
-| `skills/`, `agents/` | The original framework, 31 March 2026 |
-| [`papers/parallel-architecture-and-operations.pdf`](papers/parallel-architecture-and-operations.pdf) | "PTheory: Parallel Architecture and Operations": Architect and Operator, awareness without premature enforcement, enforcement at the commitment boundary |
-| [`papers/build_ptheory_doc.js`](papers/build_ptheory_doc.js) | Script that builds the Word version of that paper with its diagrams |
-| [`history/original-ptheory.md`](history/original-ptheory.md) | Complete account of the original PTheory: lifecycle, state, readiness gate, every rule it set |
-| `feat/render-multi-env-standard` branch | The system spec, workflow schema, chain flow and design docs, and a Render multi-environment standard (31 March to 5 April 2026) |
+| Nothing starts without a defined scope. | A scope document is required before any planning. It is never edited, only amended. |
+| Work moves through a fixed chain, one job per step. | Plan, implement, test, review and close are separate steps. A step does its job and nothing else. |
+| If it isn't written down, it doesn't exist. | Every step is documented twice: in the repo and in the tracker. The final gate only accepts files. |
 
-## Frameworks built from this research
+An **architect** explores and builds; an **operator** takes the result into production. The handoff between them is a contract boundary, guarded by a 24-point readiness gate.
 
-Later PTheory frameworks (`ptheory-claude-initial`, `ptheory-template`, `ptheory-framework`) were built from this research and are credited in their own repos.
+## Quick start
 
-Related: `commonplace` holds candidate Paper 3, "Persistent Context for Agentic Engineering". Charterline is a separate framework and does not build on PTheory.
-
-## The original framework
-
-Development methodology framework — skills, agents, and policies for Claude Code.
-
-Cuts the development cycle in half: exploration and production run in parallel, connected by contracts and AI-generated breadcrumbs.
-
-### Structure
-
-```
-ptheory/
-├── skills/          # 50 skill files (SKILL.md each)
-│   ├── plan/        # /plan — creates implementation plans from Plane modules
-│   ├── implement/   # /implement — implements one issue at a time
-│   ├── test/        # /test — writes and runs tests
-│   ├── close/       # /close — verifies completion, posts summary
-│   ├── document-plane/  # /document-plane — updates Plane after each phase
-│   ├── document-code/   # /document-code — updates repo docs after each phase
-│   ├── plane/       # /plane — general Plane project management
-│   ├── ptheory/     # /ptheory — entry point (onboard or resume)
-│   └── ...          # 42 more specialized skills
-├── agents/          # 21 agent definitions
-│   ├── backend-engineer.md
-│   ├── frontend-engineer.md
-│   ├── implement-orchestrator.md
-│   ├── plan-orchestrator.md
-│   └── ...
-└── README.md
-```
-
-### Project Management
-
-The original framework tracked work in a self-hosted **Plane** instance (workspace and API credentials were kept in a secrets manager). Point the `/plane` skills at your own tracker.
-
-### Installation
-
-Copy skills and agents to your Claude Code config:
+This repo is a historical source, kept as it stood. To try the original framework in Claude Code:
 
 ```bash
 cp -R skills/* ~/.claude/skills/
 cp -R agents/* ~/.claude/agents/
 ```
 
-### Workflow Chain
+Then `/ptheory` in a project: it detects state and routes to onboarding or planning. The skills that talk to an issue tracker expect a self-hosted Plane instance; point them at your own.
+
+## How it works
 
 ```
 /plan → /document-plane → /implement → /document-code → /document-plane
@@ -71,6 +36,32 @@ cp -R agents/* ~/.claude/agents/
   → /close
 ```
 
+- `/plan` classifies a milestone's issues into waves; eight specialist agents review the draft, and a critical finding forces a revision.
+- Each issue runs implement, test and review as separate steps, with documentation to the repo and the tracker after every one.
+- A critical review finding sends the work back to planning.
+- `/close` verifies the readiness gate before a milestone closes.
+
+[`history/original-ptheory.md`](history/original-ptheory.md) is the complete account: lifecycle, state, readiness gate, every rule it set.
+
+## Status
+
+Historical. This is the framework as defined on 31 March 2026; it is not maintained. The system spec, workflow schema, chain flow and design docs, plus a Render multi-environment standard (31 March to 5 April 2026), are on the `feat/render-multi-env-standard` branch.
+
+Later PTheory frameworks (`ptheory-claude-initial`, `ptheory-template`, `ptheory-framework`) were built from this research and are credited in their own repos.
+
+## The thinking behind this
+
+- [PTheory: Parallel Architecture and Operations](papers/parallel-architecture-and-operations.pdf): Architect and Operator, awareness without premature enforcement, enforcement at the commitment boundary.
+- [`papers/build_ptheory_doc.js`](papers/build_ptheory_doc.js) builds the Word version of that paper with its diagrams (`npm install docx`, then `node papers/build_ptheory_doc.js`).
+
+## Credits
+
+Built for [Claude Code](https://claude.com/claude-code). The method drew on the Architects and Operators framework.
+
 ## License
 
 [MIT](LICENSE).
+
+---
+
+Root: PTheory · Type: build
